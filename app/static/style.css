@@ -1,0 +1,16 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  nav {
+    background-color: #f8f8f8;
+    padding: 10px;
+  }
+  
+  .container {
+    margin: 20px;
+  }
+  
+  .flashes {
+    color: red;
+  }
