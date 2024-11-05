@@ -1,19 +1,20 @@
 from . import db
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'user'
+    
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), nullable=False, unique=True)
-    password = db.Column(db.String(150), nullable=False)
-    courses = db.relationship('Course', secondary='enrollment', back_populates='students')
+    email = db.Column(db.String(150), nullable=False, unique=True)
+    password_hash = db.Column(db.String(128), nullable=False)
 
-class Course(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(150), nullable=False)
-    students = db.relationship('User', secondary='enrollment', back_populates='courses')
+    # Métodos para manejar el hash de la contraseña
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
 
-class Enrollment(db.Model):
-    __tablename__ = 'enrollment'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+

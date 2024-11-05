@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash,
 from .models import User
 from .forms import LoginForm, RegistrationForm
 from flask_login import current_user, login_required, login_user, logout_user
+from app import db
 
 main = Blueprint('main', __name__)
 
