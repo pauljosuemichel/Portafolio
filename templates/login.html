@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+              {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('login') }}" method="post">
+            {{ form.hidden_tag() }}
+            <label for="username">Usuario:</label>
+            {{ form.username }}
+            
+            <label for="password">Contraseña:</label>
+            {{ form.password }}
+            
+            {{ form.submit }}
+        </form>
+
+        <!-- Botón para cerrar sesión -->
+        <form action="{{ url_for('logout') }}" method="post" style="margin-top: 20px;">
+            <button type="submit">Cerrar Sesión</button>
+        </form>
+    </div>
+</body>
+</html>

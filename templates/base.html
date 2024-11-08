@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        {% if is_authenticated %}
+        <h3>Opciones de desarrollador</h3>
+        {% endif %}
+        
+        <div class="header">
+            <iframe src="/header" frameborder="0" class="content-frame"></iframe>
+        </div>
+        <div class="about">
+            <iframe src="/about" frameborder="0" class="content-frame"></iframe>
+        </div>
+        <div class="contact">
+            <iframe src="/contact" frameborder="0" class="content-frame"></iframe>
+        </div>
+        <div class="skills">
+            <iframe src="/skills" frameborder="0" class="content-frame"></iframe>
+        </div>
+        <div class="projects">
+            <iframe src="/projects" frameborder="0" class="content-frame"></iframe>
+        </div>
+        <div class="logo">
+            <iframe src="/logo" frameborder="0" class="content-frame"></iframe>
+        </div>
+        <div class="settings">
+            <iframe src="/settings" frameborder="0" class="content-frame"></iframe>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const theme = sessionStorage.getItem("theme") || "dark";
+            if (theme === "light") {
+                document.body.classList.add("light-theme");
+            }
+        });
+
+        function toggleTheme() {
+            document.body.classList.toggle("light-theme");
+            const theme = document.body.classList.contains("light-theme") ? "light" : "dark";
+            sessionStorage.setItem("theme", theme);
+        }
+    </script>
+</body>
+
+</html>
