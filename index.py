@@ -96,6 +96,14 @@ def inicio():
                            experiencias=experiencias, 
                            educacion=educacion)
 
+@app.route('/update_description', methods=['POST'])
+def update_description():
+    if 'role' in session and session['role'] == 'admin':
+        new_description = request.form['description']
+        # Aquí actualizarías la base de datos
+        flash("Descripción actualizada con éxito", "success")
+    return redirect(url_for('pagina_actual'))
+
 
 
 # Creación de tablas en la base de datos si no existen

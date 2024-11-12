@@ -164,6 +164,19 @@
             </ul>
         </div>
 
+
+        <div class="section">
+            <h2>Descripción</h2>
+            {% if session['role'] == 'admin' %}
+                <form id="edit-description-form" method="POST" action="{{ url_for('update_description') }}">
+                    <textarea name="description" rows="4" class="form-input">{{ description }}</textarea>
+                    <button type="submit" class="btn">Guardar Cambios</button>
+                </form>
+            {% else %}
+                <p>{{ description }}</p>
+            {% endif %}
+        </div>        
+
         <!-- Botón para cambiar el tema -->
         <button onclick="toggleTheme()">Cambiar tema</button>
     </div>
