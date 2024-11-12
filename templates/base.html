@@ -3,8 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio</title>
+    <title>Portafolio | Currículum</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        /* Estilos generales y reinicio */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            color: #019214; /* Color amarillo para los títulos */
+        }
+
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        /* Información de contacto */
+        .contact-info {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #008100; /* Borde amarillo para la imagen de perfil */
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            font-size: 1rem;
+            color: #b0bec5; /* Gris claro para el texto */
+        }
+
+        /* Listas de habilidades */
+        .skills, .experience, .education {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .skills li, .experience li, .education li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #333;
+            color: #cfd8dc; /* Gris claro para los textos */
+        }
+
+        .skills li:last-child, .experience li:last-child, .education li:last-child {
+            border-bottom: none;
+        }
+
+        /* Links y botones */
+        a {
+            color: #ffcc00;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #ffd740;
+        }
+
+        button {
+            background: #008311;
+            border: none;
+            color: #121212;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #ffd740;
+        }
+
+        /* Tema claro */
+        body.light-theme {
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .light-theme .container {
+            background-color: #fafafa;
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,7 +128,54 @@
         {% else %}
             <a href="{{ url_for('login') }}">Iniciar sesión</a>
         {% endif %}
-        
+
+        <!-- Información del portafolio en formato de currículum -->
+        <h1>Mi Currículum</h1>
+
+        <!-- Sección de información de contacto -->
+        <div class="section contact-info">
+            <img src="{{ url_for('static', filename='img/image.png') }}" alt="Foto de perfil">
+            <p><strong>Email:</strong> ejemplo@correo.com</p>
+            <p><strong>Teléfono:</strong> +54 351 456-3789</p>
+            <p><strong>LinkedIn:</strong> <a href="#" target="_blank">linkedin.com/in/usuario</a></p>
+        </div>
+
+        <!-- Sección de habilidades -->
+        <div class="section">
+            <h2>Habilidades</h2>
+            <ul class="skills">
+                <li>HTML, CSS, JavaScript</li>
+                <li>Python, Flask</li>
+                <li>SQL, MySQL</li>
+                <li>Control de versiones (Git)</li>
+            </ul>
+        </div>
+
+        <!-- Sección de experiencia laboral -->
+        <div class="section">
+            <h2>Experiencia Laboral</h2>
+            <ul class="experience">
+                <li>
+                    <strong>Desarrollador Web</strong> - Empresa XYZ (2021 - Actualidad)
+                    <p>Desarrollé aplicaciones web utilizando Python y Flask, optimizando el rendimiento y la experiencia del usuario.</p>
+                </li>
+                <li>
+                    <strong>Analista de Datos</strong> - Empresa ABC (2019 - 2021)
+                    <p>Analicé datos de clientes para identificar tendencias, contribuyendo a la toma de decisiones estratégicas.</p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Sección de educación -->
+        <div class="section">
+            <h2>Educación</h2>
+            <ul class="education">
+                <li>
+                    <strong>Técnico en Programación</strong> - Instituto Técnico Renault (2019 - 2024)
+                </li>
+            </ul>
+        </div>
+
         <!-- Botón para cambiar el tema -->
         <button onclick="toggleTheme()">Cambiar tema</button>
     </div>
