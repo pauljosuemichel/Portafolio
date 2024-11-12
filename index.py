@@ -36,6 +36,24 @@ class LoginForm(FlaskForm):
     password = PasswordField('Contraseña', validators=[DataRequired()])
     submit = SubmitField('Iniciar Sesión')
 
+class Habilidad(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+
+class Experiencia(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    puesto = db.Column(db.String(100), nullable=False)
+    empresa = db.Column(db.String(100), nullable=False)
+    fecha_inicio = db.Column(db.String(20), nullable=False)
+    fecha_fin = db.Column(db.String(20), nullable=True)
+    descripcion = db.Column(db.Text, nullable=True)
+
+class Educacion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    titulo = db.Column(db.String(100), nullable=False)
+    institucion = db.Column(db.String(100), nullable=False)
+    anio = db.Column(db.String(4), nullable=False)
+
 # Decorador para verificar si el usuario está autenticado
 def login_required(f):
     def wrap(*args, **kwargs):
@@ -68,8 +86,15 @@ def logout():
 # Rutas restringidas
 @app.route('/')
 def inicio():
-    is_authenticated = 'user_id' in session  # Ajusta según cómo guardes el estado de autenticación
-    return render_template('base.html', is_authenticated=is_authenticated)
+    habilidades = Habilidad.query.all()
+    experiencias = Experiencia.query.all()
+    educacion = Educacion.query.all()
+    is_authenticated = 'username' in session
+
+    return render_template('base.html', is_authenticated=is_authenticated, 
+                           habilidades=habilidades, 
+                           experiencias=experiencias, 
+                           educacion=educacion)
 
 
 

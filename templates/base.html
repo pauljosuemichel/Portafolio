@@ -32,7 +32,7 @@
 
         h1, h2, h3 {
             margin-bottom: 1rem;
-            color: #019214; /* Color amarillo para los títulos */
+            color: #009213; /* Color verde para los títulos */
         }
 
         h1 {
@@ -54,7 +54,7 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            border: 3px solid #008100; /* Borde amarillo para la imagen de perfil */
+            border: 3px solid #018613; /* Borde verde para la imagen de perfil */
             margin-bottom: 1rem;
         }
 
@@ -63,33 +63,36 @@
             color: #b0bec5; /* Gris claro para el texto */
         }
 
-        /* Listas de habilidades */
-        .skills, .experience, .education {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .skills li, .experience li, .education li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #333;
-            color: #cfd8dc; /* Gris claro para los textos */
-        }
-
-        .skills li:last-child, .experience li:last-child, .education li:last-child {
-            border-bottom: none;
-        }
-
-        /* Links y botones */
-        a {
-            color: #ffcc00;
+        /* Estilo específico para el enlace de LinkedIn */
+        .contact-info a {
+            color: #cb82ff; /* Color lila para el enlace de LinkedIn */
             text-decoration: none;
             transition: color 0.3s;
         }
 
-        a:hover {
-            color: #ffd740;
+        .contact-info a:hover {
+            color: #d8a8ff; /* Color lila claro al pasar el cursor */
         }
 
+        /* Botones de sesión */
+        .auth-button {
+            display: inline-block;
+            background-color: #d32f2f; /* Rojo para los botones */
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-bottom: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .auth-button:hover {
+            background-color: #c62828; /* Rojo oscuro al pasar el cursor */
+        }
+
+        /* Botón para cambiar tema */
         button {
             background: #008311;
             border: none;
@@ -105,74 +108,59 @@
         button:hover {
             background: #ffd740;
         }
-
-        /* Tema claro */
-        body.light-theme {
-            background-color: #f4f4f9;
-            color: #333;
-        }
-
-        .light-theme .container {
-            background-color: #fafafa;
-            color: #333;
-        }
     </style>
 </head>
 
 <body>
     <div class="container">
         {% if is_authenticated %}
+            <a href="{{ url_for('logout') }}" class="auth-button">Cerrar sesión</a>
             <h3>Opciones de desarrollador</h3>
             <p>Bienvenido, {{ session['username'] }}.</p>
-            <a href="{{ url_for('logout') }}">Cerrar sesión</a>
         {% else %}
-            <a href="{{ url_for('login') }}">Iniciar sesión</a>
+            <a href="{{ url_for('login') }}" class="auth-button">Iniciar sesión</a>
         {% endif %}
 
-        <!-- Información del portafolio en formato de currículum -->
-        <h1>Mi Currículum</h1>
+        <h1>Paul Michel</h1>
 
         <!-- Sección de información de contacto -->
         <div class="section contact-info">
             <img src="{{ url_for('static', filename='img/image.png') }}" alt="Foto de perfil">
-            <p><strong>Email:</strong> ejemplo@correo.com</p>
+            <p><strong>Email:</strong> marmota@gmai.com</p>
             <p><strong>Teléfono:</strong> +54 351 456-3789</p>
-            <p><strong>LinkedIn:</strong> <a href="#" target="_blank">linkedin.com/in/usuario</a></p>
+            <p><strong>LinkedIn:</strong> <a href="#" target="_blank">linkedin.com/in/marmota</a></p>
         </div>
 
         <!-- Sección de habilidades -->
         <div class="section">
             <h2>Habilidades</h2>
             <ul class="skills">
-                <li>HTML, CSS, JavaScript</li>
-                <li>Python, Flask</li>
-                <li>SQL, MySQL</li>
-                <li>Control de versiones (Git)</li>
+                {% for habilidad in habilidades %}
+                    <li>{{ habilidad.nombre }}</li>
+                {% endfor %}
             </ul>
         </div>
-
-        <!-- Sección de experiencia laboral -->
+        
         <div class="section">
             <h2>Experiencia Laboral</h2>
             <ul class="experience">
-                <li>
-                    <strong>Desarrollador Web</strong> - Empresa XYZ (2021 - Actualidad)
-                    <p>Desarrollé aplicaciones web utilizando Python y Flask, optimizando el rendimiento y la experiencia del usuario.</p>
-                </li>
-                <li>
-                    <strong>Analista de Datos</strong> - Empresa ABC (2019 - 2021)
-                    <p>Analicé datos de clientes para identificar tendencias, contribuyendo a la toma de decisiones estratégicas.</p>
-                </li>
+                {% for experiencia in experiencias %}
+                    <li>
+                        <strong>{{ experiencia.puesto }}</strong> - {{ experiencia.empresa }} ({{ experiencia.fecha_inicio }} - {{ experiencia.fecha_fin or 'Presente' }})
+                        <p>{{ experiencia.descripcion }}</p>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
-
-        <!-- Sección de educación -->
+        
         <div class="section">
             <h2>Educación</h2>
             <ul class="education">
-                <li>
-                    <strong>Técnico en Programación</strong> - Instituto Técnico Renault (2019 - 2024)
-                </li>
+                {% for edu in educacion %}
+                    <li>
+                        <strong>{{ edu.titulo }}</strong> - {{ edu.institucion }} ({{ edu.anio }})
+                    </li>
+                {% endfor %}
             </ul>
         </div>
 
