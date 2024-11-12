@@ -1,40 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portafolio</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
     <div class="container">
         {% if is_authenticated %}
-        <h3>Opciones de desarrollador</h3>
+            <h3>Opciones de desarrollador</h3>
+            <p>Bienvenido, {{ session['username'] }}.</p>
+            <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Iniciar sesión</a>
         {% endif %}
         
-        <div class="header">
-            <iframe src="/header" frameborder="0" class="content-frame"></iframe>
-        </div>
-        <div class="about">
-            <iframe src="/about" frameborder="0" class="content-frame"></iframe>
-        </div>
-        <div class="contact">
-            <iframe src="/contact" frameborder="0" class="content-frame"></iframe>
-        </div>
-        <div class="skills">
-            <iframe src="/skills" frameborder="0" class="content-frame"></iframe>
-        </div>
-        <div class="projects">
-            <iframe src="/projects" frameborder="0" class="content-frame"></iframe>
-        </div>
-        <div class="logo">
-            <iframe src="/logo" frameborder="0" class="content-frame"></iframe>
-        </div>
-        <div class="settings">
-            <iframe src="/settings" frameborder="0" class="content-frame"></iframe>
-        </div>
+        <!-- Botón para cambiar el tema -->
+        <button onclick="toggleTheme()">Cambiar tema</button>
     </div>
 
     <script>
@@ -52,5 +36,4 @@
         }
     </script>
 </body>
-
 </html>
