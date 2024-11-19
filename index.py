@@ -36,6 +36,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Contraseña', validators=[DataRequired()])
     submit = SubmitField('Iniciar Sesión')
 
+# Modelos adicionales
 class Habilidad(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
@@ -83,7 +84,7 @@ def logout():
     flash('Sesión cerrada.', 'info')
     return redirect(url_for('login'))
 
-# Rutas restringidas
+# Ruta principal del portafolio
 @app.route('/')
 def inicio():
     habilidades = Habilidad.query.all()
@@ -91,10 +92,30 @@ def inicio():
     educacion = Educacion.query.all()
     is_authenticated = 'username' in session
 
-    return render_template('base.html', is_authenticated=is_authenticated, 
+    proyectos = [
+        {
+            'titulo': 'Sistema de Gestión',
+            'descripcion': 'Aplicación para gestionar inventarios y reportes en tiempo real.',
+            'link': 'https://github.com/usuario/sistema-gestion'
+        },
+        {
+            'titulo': 'Tienda Online',
+            'descripcion': 'E-commerce para la venta de productos digitales y físicos.',
+            'link': 'https://github.com/usuario/tienda-online'
+        },
+        {
+            'titulo': 'Dashboard Analítico',
+            'descripcion': 'Panel interactivo para el análisis de datos financieros.',
+            'link': 'https://github.com/usuario/dashboard-analitico'
+        }
+    ]
+
+    return render_template('base.html', 
+                           is_authenticated=is_authenticated, 
                            habilidades=habilidades, 
                            experiencias=experiencias, 
-                           educacion=educacion)
+                           educacion=educacion, 
+                           proyectos=proyectos)
 
 @app.route('/update_description', methods=['POST'])
 def update_description():
@@ -102,9 +123,7 @@ def update_description():
         new_description = request.form['description']
         # Aquí actualizarías la base de datos
         flash("Descripción actualizada con éxito", "success")
-    return redirect(url_for('pagina_actual'))
-
-
+    return redirect(url_for('inicio'))
 
 # Creación de tablas en la base de datos si no existen
 with app.app_context():

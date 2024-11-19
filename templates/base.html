@@ -6,12 +6,12 @@
     <title>Portafolio | Currículum</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
-        /* Estilos generales y reinicio */
+        /* Estilos generales */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: Verdana, sans-serif;
         }
 
         body {
@@ -20,6 +20,7 @@
             display: flex;
             justify-content: center;
             padding: 2rem;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
@@ -28,11 +29,14 @@
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
 
         h1, h2, h3 {
             margin-bottom: 1rem;
-            color: #009213; /* Color verde para los títulos */
+            color: #00ca65;
         }
 
         h1 {
@@ -40,110 +44,144 @@
             text-align: center;
         }
 
-        .section {
-            margin-bottom: 2rem;
-        }
-
         /* Información de contacto */
         .contact-info {
-            text-align: center;
-            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: space-between;
+            background-color: #2e2e2e;
+            padding: 1.5rem;
+            border-radius: 8px;
         }
 
         .contact-info img {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            border: 3px solid #018613; /* Borde verde para la imagen de perfil */
-            margin-bottom: 1rem;
+            border: 3px solid #00ca65;
         }
 
-        .contact-info p {
-            font-size: 1rem;
-            color: #b0bec5; /* Gris claro para el texto */
+        .contact-details {
+            flex-grow: 1;
         }
 
-        /* Estilo específico para el enlace de LinkedIn */
-        .contact-info a {
-            color: #cb82ff; /* Color lila para el enlace de LinkedIn */
+        .contact-details p {
+            margin-bottom: 0.5rem;
+            color: #b0bec5;
+        }
+
+        .contact-details a {
+            color: #cb82ff;
             text-decoration: none;
             transition: color 0.3s;
         }
 
-        .contact-info a:hover {
-            color: #d8a8ff; /* Color lila claro al pasar el cursor */
+        .contact-details a:hover {
+            color: #d8a8ff;
         }
 
-        /* Botones de sesión */
         .auth-button {
-            display: inline-block;
-            background-color: #d32f2f; /* Rojo para los botones */
+            background-color: #d32f2f;
             color: #ffffff;
             padding: 0.5rem 1rem;
             border-radius: 12px;
             text-decoration: none;
             font-weight: bold;
             transition: background-color 0.3s;
-            margin-bottom: 1.5rem;
-            margin-right: 0.5rem;
         }
 
         .auth-button:hover {
-            background-color: #c62828; /* Rojo oscuro al pasar el cursor */
+            background-color: #c62828;
+        }
+
+        /* Contenedores individuales */
+        .section {
+            background-color: #2e2e2e;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-link {
+            color: #00ca65;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .project-link:hover {
+            color: #00ff99;
         }
 
         /* Botón para cambiar tema */
         button {
-            background: #008311;
+            background: #00ca65;
             border: none;
             color: #121212;
             font-size: 0.9rem;
             cursor: pointer;
-            margin-top: 1.5rem;
             padding: 0.5rem 1rem;
             border-radius: 4px;
             transition: background 0.3s;
+            align-self: center;
         }
 
         button:hover {
-            background: #ffd740;
+            background: #00b159;
+        }
+
+        /* Tema claro */
+        .light-theme {
+            background-color: #f5f5f5;
+            color: #121212;
+        }
+
+        .light-theme .container {
+            background-color: #ffffff;
+        }
+
+        .light-theme .section {
+            background-color: #f0f0f0;
+        }
+
+        .light-theme button {
+            background: #00796b;
+            color: #ffffff;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-        {% if is_authenticated %}
-            <a href="{{ url_for('logout') }}" class="auth-button">Cerrar sesión</a>
-            <h3>Opciones de desarrollador</h3>
-            <p>Bienvenido, {{ session['username'] }}.</p>
-        {% else %}
-            <a href="{{ url_for('login') }}" class="auth-button">Iniciar sesión</a>
-        {% endif %}
-
-        <h1>Paul Michel</h1>
-
-        <!-- Sección de información de contacto -->
-        <div class="section contact-info">
+        <!-- Información de contacto y botón de sesión -->
+        <div class="contact-info">
             <img src="{{ url_for('static', filename='img/image.png') }}" alt="Foto de perfil">
-            <p><strong>Email:</strong> marmota@gmai.com</p>
-            <p><strong>Teléfono:</strong> +54 351 456-3789</p>
-            <p><strong>LinkedIn:</strong> <a href="#" target="_blank">linkedin.com/in/marmota</a></p>
+            <div class="contact-details">
+                <p><strong>Email:</strong> marmota@gmai.com</p>
+                <p><strong>Teléfono:</strong> +54 351 456-3789</p>
+                <p><strong>LinkedIn:</strong> <a href="#" target="_blank">linkedin.com/in/marmota</a></p>
+            </div>
+            {% if is_authenticated %}
+                <a href="{{ url_for('logout') }}" class="auth-button">Cerrar sesión</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="auth-button">Iniciar sesión</a>
+            {% endif %}
         </div>
 
-        <!-- Sección de habilidades -->
+        <!-- Habilidades -->
         <div class="section">
             <h2>Habilidades</h2>
-            <ul class="skills">
+            <ul>
                 {% for habilidad in habilidades %}
                     <li>{{ habilidad.nombre }}</li>
                 {% endfor %}
             </ul>
         </div>
-        
+
+        <!-- Experiencia -->
         <div class="section">
             <h2>Experiencia Laboral</h2>
-            <ul class="experience">
+            <ul>
                 {% for experiencia in experiencias %}
                     <li>
                         <strong>{{ experiencia.puesto }}</strong> - {{ experiencia.empresa }} ({{ experiencia.fecha_inicio }} - {{ experiencia.fecha_fin or 'Presente' }})
@@ -152,10 +190,11 @@
                 {% endfor %}
             </ul>
         </div>
-        
+
+        <!-- Educación -->
         <div class="section">
             <h2>Educación</h2>
-            <ul class="education">
+            <ul>
                 {% for edu in educacion %}
                     <li>
                         <strong>{{ edu.titulo }}</strong> - {{ edu.institucion }} ({{ edu.anio }})
@@ -164,20 +203,33 @@
             </ul>
         </div>
 
+        <!-- Proyectos -->
+        <div class="section">
+            <h2>Proyectos</h2>
+            <ul>
+                {% for proyecto in proyectos %}
+                    <li>
+                        <strong>{{ proyecto.titulo }}</strong> - <a href="{{ proyecto.link }}" class="project-link" target="_blank">Ver proyecto</a>
+                        <p>{{ proyecto.descripcion }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
 
+        <!-- Descripción -->
         <div class="section">
             <h2>Descripción</h2>
             {% if session['role'] == 'admin' %}
-                <form id="edit-description-form" method="POST" action="{{ url_for('update_description') }}">
-                    <textarea name="description" rows="4" class="form-input">{{ description }}</textarea>
-                    <button type="submit" class="btn">Guardar Cambios</button>
+                <form method="POST" action="{{ url_for('update_description') }}">
+                    <textarea name="description" rows="4" style="width: 100%;">{{ description }}</textarea>
+                    <button type="submit">Guardar Cambios</button>
                 </form>
             {% else %}
                 <p>{{ description }}</p>
             {% endif %}
-        </div>        
+        </div>
 
-        <!-- Botón para cambiar el tema -->
+        <!-- Botón para cambiar tema -->
         <button onclick="toggleTheme()">Cambiar tema</button>
     </div>
 
