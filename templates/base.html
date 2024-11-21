@@ -155,13 +155,16 @@
     <div class="container">
         <!-- Información de contacto y botón de sesión -->
         <div class="contact-info">
+            <!-- Aquí usamos Jinja2 para cargar la foto de perfil -->
             <img src="{{ url_for('static', filename='img/image.png') }}" alt="Foto de perfil">
             <div class="contact-details">
                 <p><strong>Email:</strong> marmota@gmai.com</p>
                 <p><strong>Teléfono:</strong> +54 351 456-3789</p>
                 <p><strong>LinkedIn:</strong> <a href="#" target="_blank">linkedin.com/in/marmota</a></p>
             </div>
-            {% if is_authenticated %}
+            
+            <!-- Aquí se usa Jinja2 para mostrar un botón de iniciar/cerrar sesión -->
+            {% if is_authenticated %}  <!-- Condición de autenticación -->
                 <a href="{{ url_for('logout') }}" class="auth-button">Cerrar sesión</a>
             {% else %}
                 <a href="{{ url_for('login') }}" class="auth-button">Iniciar sesión</a>
@@ -172,8 +175,9 @@
         <div class="section">
             <h2>Habilidades</h2>
             <ul>
-                {% for habilidad in habilidades %}
-                    <li>{{ habilidad.nombre }}</li>
+                <!-- Usamos Jinja2 para iterar sobre la lista de habilidades -->
+                {% for habilidad in habilidades %} <!-- Bucle sobre la lista 'habilidades' -->
+                    <li>{{ habilidad.nombre }}</li> <!-- Mostrar el nombre de cada habilidad -->
                 {% endfor %}
             </ul>
         </div>
@@ -182,9 +186,11 @@
         <div class="section">
             <h2>Experiencia Laboral</h2>
             <ul>
-                {% for experiencia in experiencias %}
+                <!-- Usamos Jinja2 para iterar sobre la lista de experiencias laborales -->
+                {% for experiencia in experiencias %} <!-- Bucle sobre la lista 'experiencias' -->
                     <li>
-                        <strong>{{ experiencia.puesto }}</strong> - {{ experiencia.empresa }} ({{ experiencia.fecha_inicio }} - {{ experiencia.fecha_fin or 'Presente' }})
+                        <strong>{{ experiencia.puesto }}</strong> - {{ experiencia.empresa }} 
+                        ({{ experiencia.fecha_inicio }} - {{ experiencia.fecha_fin or 'Presente' }})
                         <p>{{ experiencia.descripcion }}</p>
                     </li>
                 {% endfor %}
@@ -195,7 +201,8 @@
         <div class="section">
             <h2>Educación</h2>
             <ul>
-                {% for edu in educacion %}
+                <!-- Usamos Jinja2 para iterar sobre la lista de educación -->
+                {% for edu in educacion %} <!-- Bucle sobre la lista 'educacion' -->
                     <li>
                         <strong>{{ edu.titulo }}</strong> - {{ edu.institucion }} ({{ edu.anio }})
                     </li>
@@ -207,7 +214,8 @@
         <div class="section">
             <h2>Proyectos</h2>
             <ul>
-                {% for proyecto in proyectos %}
+                <!-- Usamos Jinja2 para iterar sobre la lista de proyectos -->
+                {% for proyecto in proyectos %} <!-- Bucle sobre la lista 'proyectos' -->
                     <li>
                         <strong>{{ proyecto.titulo }}</strong> - <a href="{{ proyecto.link }}" class="project-link" target="_blank">Ver proyecto</a>
                         <p>{{ proyecto.descripcion }}</p>
@@ -219,12 +227,15 @@
         <!-- Descripción -->
         <div class="section">
             <h2>Descripción</h2>
-            {% if session['role'] == 'admin' %}
+            <!-- Aquí usamos Jinja2 para verificar el rol del usuario -->
+            {% if session['role'] == 'admin' %}  <!-- Verificar si el usuario es admin -->
+                <!-- Si es admin, mostrar el formulario para editar la descripción -->
                 <form method="POST" action="{{ url_for('update_description') }}">
                     <textarea name="description" rows="4" style="width: 100%;">{{ description }}</textarea>
                     <button type="submit">Guardar Cambios</button>
                 </form>
             {% else %}
+                <!-- Si no es admin, solo mostrar la descripción -->
                 <p>{{ description }}</p>
             {% endif %}
         </div>

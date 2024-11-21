@@ -21,7 +21,7 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_pre_ping': True}
 # Inicialización de la base de datos
 db = SQLAlchemy(app)
 
-# Modelo de usuario
+# Modelo de usuario (Ejemplo de uso de POO con SQLAlchemy)
 class Usuario(db.Model):
     __tablename__ = 'usuario'
     id = db.Column(db.Integer, primary_key=True)
@@ -30,13 +30,13 @@ class Usuario(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     es_admin = db.Column(db.Boolean, default=False)
 
-# Formularios de WTF Flask
+# Formularios de WTF Flask (Ejemplo de POO con formularios)
 class LoginForm(FlaskForm):
     username = StringField('Usuario', validators=[DataRequired()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     submit = SubmitField('Iniciar Sesión')
 
-# Modelos adicionales
+# Modelos adicionales (Uso de POO para crear más clases que representan tablas de base de datos)
 class Habilidad(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
@@ -55,8 +55,8 @@ class Educacion(db.Model):
     institucion = db.Column(db.String(100), nullable=False)
     anio = db.Column(db.String(4), nullable=False)
 
-# Decorador para verificar si el usuario está autenticado
-def login_required(f):
+# Decorador para verificar si el usuario está autenticado (Uso de una función como un decorador)
+def login_required(f):  # POO: Función que actúa como decorador
     def wrap(*args, **kwargs):
         if 'username' not in session:
             flash('Inicia sesión para acceder.', 'warning')
@@ -67,7 +67,7 @@ def login_required(f):
 # Ruta para manejar el inicio de sesión
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
+    form = LoginForm()  # POO: Instancia de un formulario de tipo 'LoginForm'
     if form.validate_on_submit():
         user = Usuario.query.filter_by(username=form.username.data).first()
         if user and check_password_hash(user.password, form.password.data):
@@ -87,9 +87,9 @@ def logout():
 # Ruta principal del portafolio
 @app.route('/')
 def inicio():
-    habilidades = Habilidad.query.all()
-    experiencias = Experiencia.query.all()
-    educacion = Educacion.query.all()
+    habilidades = Habilidad.query.all()  # POO: Uso del modelo 'Habilidad' para obtener datos de la base de datos
+    experiencias = Experiencia.query.all()  
+    educacion = Educacion.query.all()  
     is_authenticated = 'username' in session
 
     proyectos = [
@@ -121,13 +121,13 @@ def inicio():
 def update_description():
     if 'role' in session and session['role'] == 'admin':
         new_description = request.form['description']
-        # Aquí actualizarías la base de datos
+        # Actualizar la base de datos
         flash("Descripción actualizada con éxito", "success")
     return redirect(url_for('inicio'))
 
 # Creación de tablas en la base de datos si no existen
 with app.app_context():
-    db.create_all()
+    db.create_all()  # POO: Crea las tablas definidas por las clases del modelo en la base de datos
 
 if __name__ == '__main__':
     app.run(debug=True)
